@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="/1/Share the site on Google Sheet/styles.css">
+</head>
+<body>
+  <style>#submit-to-google-sheet{ width: auto; max-width: 600px; margin: 0 auto; padding: 20px 50px 20px 23px; background-color: #f8f8f8; border: 1px solid #ddd; border-radius: 5px; box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1); transition: all 0.3s ease;} #submit-to-google-sheet:hover{ box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.15);} #submit-to-google-sheet label{ display: block; margin-bottom: 5px; font-weight: bold; color: #333; font-size: 1.1em;} #submit-to-google-sheet input, #submit-to-google-sheet textarea{ width: 100%; padding: 10px; margin-bottom: 20px; border: 1px solid #ddd; border-radius: 3px; font-size: 1em; transition: border 0.3s ease;} #submit-to-google-sheet input:focus, #submit-to-google-sheet textarea:focus{ border-color: #007BFF; outline: none;} #submit-to-google-sheet button{ padding: 10px 20px; background-color: #007BFF; color: #fff; border: none; border-radius: 3px; cursor: pointer; font-size: 1em; transition: background-color 0.3s ease;} #submit-to-google-sheet button:hover{ background-color: #0056b3;} #sending-message, #success-message{ padding: 10px; border-radius: 3px; margin-bottom: 20px; transition: all 0.3s ease;} #sending-message{ background-color: #ffcc00; color: #333;} #success-message{ background-color: #28a745; color: #fff;} @media (max-width: 600px){ #submit-to-google-sheet{ box-shadow: none; border: none;} #submit-to-google-sheet label{ font-size: 0.9em;} #submit-to-google-sheet input, #submit-to-google-sheet textarea{ font-size: 0.8em;} #submit-to-google-sheet button{ font-size: 0.8em;}} </style>
+
+  <form id="submit-to-google-sheet" name="submit-to-google-sheet">
+    <label for="name">Name:</label>
+    <input type="text" id="name-sn-1" name="name" required><br>
+    <!--
+    <label for="email">Email:</label>
+    <input type="email" id="email-sn" name="email" required><br>
+    -->
+    <!--
+    <label for="message">Message:</label>
+    <textarea cols="25" id="message-sn" name="message" required></textarea><br>
+    -->
+    <label for="email">message</label>
+    <select cols="25" id="email-sn" name="email" required>
+      <option value="1-offtank">offtank</option>
+      <option value="2-GA">GA</option>
+      <option value="3-1h">1h</option>
+      <option value="4-Main Healer">Main Healer</option>
+      <option value="5-Ironroot">Ironroot	</option>
+      <option value="6-DPS">DPS</option>
+    </select><br>
+
+
+
+
+
+    
+    <button id="submit-button-sn" type="submit" value="Send">Send</button>
+
+    
+
+
+
+</form>
+
+<div id="sending-message" style="display: none;">Please wait, Your message is being sent...</div>
+<div id="success-message" style="display: none;">Your message has been sent. Thank you!</div>
+
+<iframe class="sohaib" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vTF7hzDVy50Ad9JZ6jKoKYna7bfnFv6lGWCO7iNtDXbSzSJwDOpCp7j7R6bpt0IsErFEMNuc8GNV0Rl/pubhtml?gid=2014113766&single=true" frameborder="0">
+  
+</iframe>
+
+<script>
+  var scriptURL = 'https://script.google.com/macros/s/AKfycbyfp-g6jLOtL14z0tpghd2bWvhR5RmqkC6kC4IpH__KOrb3WFFpzO4linR2XfsQ4-8X/exec'
+  var form = document.forms['submit-to-google-sheet']
+  var successMessage = document.getElementById('success-message');
+  var sendingMessage = document.getElementById('sending-message');
+
+  form.addEventListener('submit', function(e) {
+      e.preventDefault()
+      form.style.display = 'none'; // hide the form immediately
+      sendingMessage.style.display = 'block'; // show the sending message
+      fetch(scriptURL, { method: 'POST', body: new FormData(form) })
+          .then(function(response) {
+              console.log('Success!', response)
+              sendingMessage.style.display = 'none'; // hide the sending message
+              successMessage.style.display = 'block'; // show the success message
+          })
+          .catch(function(error) {
+              console.error('Error!', error.message)
+              form.style.display = 'block'; // show the form again in case of error
+              sendingMessage.style.display = 'none'; // hide the sending message
+          })
+  })
+</script>
+</body>
+</html>
